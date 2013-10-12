@@ -80,8 +80,11 @@ void do_code() {
 	Labels = calloc(tCode, sizeof(uint16_t));
 	fread(Code, sizeof(instruction), tCode, input);
 	for(i = 0; i < tCode; i++)
-		if(Code[i].opcode >= JE && Code[i].opcode <= JGE)
-			Labels[i] = lastLabel++;
+		if((Code[i].opcode >= JMP && Code[i].opcode <= JGE) || Code[i].opcode == CALL) {
+			if(!Labels[Code[i].arg[0]])
+				Labels[Code[i].arg[0]] = lastLabel++;
+			Code[i].flags += FLABEL;
+		}
 	for(i = 0; i < tCode; i++) {
 		if(Labels[i] != 0)
 			printf("@L%X", Labels[i]);

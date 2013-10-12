@@ -76,14 +76,14 @@
 		else if(flags & FREG << shift)
 			printf("%s", registers[arg]);
 		else if(flags & FLABEL << shift)
-			printf("@L%X", Labels[arg]),
+			printf("@L%X", Labels[arg]);
 		else
 			printf("%i", arg);
 	}
 	void string_instruction(instruction i) {
 		printf("\t%s\t", opcodes[i.opcode]);
 		string_arg(i.flags, 0, i.arg[0]);
-		if(i.opcode < JE || i.opcode > JGE) {
+		if(i.opcode < JMP || i.opcode > JGE) {
 			putchar('\t');
 			string_arg(i.flags, 4, i.arg[1]);
 		}
