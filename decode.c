@@ -72,12 +72,20 @@ void do_color() {
 void do_code() {
 	uint16_t i;
 	uint16_t tCode;
+	uint16_t lastLabel = 1;
 	puts("#BEGIN");
 	fread(&tCode, sizeof(uint16_t), 1, input);
 	tCode++;
 	Code = calloc(tCode, sizeof(instruction));
+	Labels = calloc(tCode, sizeof(uint16_t));
 	fread(Code, sizeof(instruction), tCode, input);
 	for(i = 0; i < tCode; i++)
+		if(Code[i].opcode >= JE && Code[i].opcode <= JGE)
+			Labels[i] = lastLabel++;
+	for(i = 0; i < tCode; i++) {
+		if(Labels[i] != 0)
+			printf("@L%X", Labels[i]);
 		string_instruction(Code[i]);
+	}
 }
 #endif

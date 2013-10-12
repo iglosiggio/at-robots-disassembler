@@ -37,4 +37,6 @@ typedef struct {
 	uint16_t arg[2];
 } instruction;
 instruction *Code;
+
+uint8_t *Labels;
 #endif

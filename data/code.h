@@ -52,6 +52,7 @@
 	#define	MSG	47
 	#define	FREG	1
 	#define	FMEM	2
+	#define FLABEL	4
 	#define	AX	0
 	#define	BX	1
 	#define	CX	2
@@ -74,14 +75,18 @@
 			printf("[%i]", arg);
 		else if(flags & FREG << shift)
 			printf("%s", registers[arg]);
+		else if(flags & FLABEL << shift)
+			printf("@L%X", Labels[arg]),
 		else
 			printf("%i", arg);
 	}
 	void string_instruction(instruction i) {
 		printf("\t%s\t", opcodes[i.opcode]);
 		string_arg(i.flags, 0, i.arg[0]);
-		putchar('\t');
-		string_arg(i.flags, 4, i.arg[1]);
+		if(i.opcode < JE || i.opcode > JGE) {
+			putchar('\t');
+			string_arg(i.flags, 4, i.arg[1]);
+		}
 		putchar('\n');
 	}
 #endif
