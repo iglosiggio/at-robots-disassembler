@@ -1,0 +1,51 @@
+*.atc - Descripción:
+	HEADER:
+		char[6]:	AtcatC
+		ENDSECTION
+	EQUIP:
+		HEAD:		FF FF
+		short:		<ID_EQUIP>
+		short:		<ARG_1>
+		short:		<ARG_2>
+		ENDSECTION:	05 00 FF FF 00 00
+	NOMBRE:
+		short:		<tNombre>
+		short[tNombre]:	<Nombre>
+		ENDSECTION
+	COLOR:
+		byte:		<Azul>
+		byte:		<Verde>
+		byte:		<Rojo>
+		ENDSECTION:	00
+	CODE:
+		short:		<tCode>
+		INSTRUCTION:
+			byte:	<opcode>
+			byte:	<flags>
+			short:	<arg1>
+			short:	<arg2>
+			ENDSECTION
+		INSTRUCTION[tCode+1]
+				<programa>
+		ENDSECTION:	0D 0A
+
+Nota: 	Los valores de los flags siguen la siguiente forma
+		|--mr|--mr| (o similar)
+		|arg2|arg1|
+	También cabe destacar que los números están copiados big-endian
+	Ejemplos:
+		Tipo	|Ejemplo|Flags| Valor compilado de ejemplo | Significado
+		Label	| @main	|0000 | 7                          | Línea de código (empezando en 0) del label
+		Variable| <ID>	|0010 | 128                        | Lugar de la memoria (empezando en 128) donde se encuentra la variable
+		Registro| cx	|0001 | 2                          | Número identificador del registro
+		Literal	| 100	|0000 | 100                        | Literal
+		--------------------------------------------------------------------------------------------------------------------------
+		[Tipo]	|Ejemplo|Flags| Valor compilado de ejemplo | Significado
+		Registro| [cx]	|0011 | 2                          | Número identificador del registro
+		Literal	| [100]	|0010 | 100                        | Lugar de memoria a referenciar
+Un label compila como un número que representa la línea de código
+
+La instrucción LEX es la excepción a la regla y devuelve la dirección de memoria del label (>= 1024).
+	LEX sigue usando los flags de número literal.
+
+Los números en general son signed, short y big-endian.

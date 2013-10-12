@@ -1,0 +1,82 @@
+#include <stdio.h>
+#include <errno.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include "decode.h"
+#include "data/equip.h"
+#include "data/name.h"
+#include "data/code.h"
+
+#ifndef RUNTIME
+#define RUNTIME
+int main(int argc, uint8_t **argv) {
+	switch (argc) {
+		case 3:
+			input = fopen(argv[1], "r");
+			output = fopen(argv[2], "w+");
+			break;
+		case 2:
+			input = fopen(argv[1], "r");
+			output = stdout;
+			break;
+		default:
+			input = stdin;
+			output = stdout;
+			break;
+	}
+	if(!input | !output) {
+		perror((uint8_t *)strerror(errno));
+		exit(-1);
+	}
+	fread(header, sizeof(uint8_t), 6, input);	// Ignore header
+	do_equip();
+	do_name();
+	do_color();
+	do_code();
+	//fclose(input);
+	//fclose(output);
+	return 1;
+}
+
+void do_equip() {
+	int i;
+	puts("#EQUIP");
+	for(i = 0, READEQUIP(&equips[i]); !ENDEQUIP(equips[i]) && i < MAXEQUIPS; i++, READEQUIP(&equips[i]));
+	cequips = i;
+	for(i = 0; i < cequips; i++) {
+		printf("\t%s\t%i\t%i\n", get_equip(equips[i].equip), equips[i].arg[0], equips[i].arg[1]);
+	}
+	puts("#EQUIP");
+}
+
+void do_name() {
+	int i;
+	uint16_t tNombre;
+	uint16_t *iNombre;
+	fread(&tNombre, sizeof(uint16_t), 1, input);
+	Nombre = calloc(tNombre + 1, sizeof(char));
+	iNombre = calloc(tNombre, sizeof(uint16_t));
+	fread(iNombre, sizeof(uint16_t), tNombre, input);
+	for(i = 0; i<tNombre; i++)
+		Nombre[i] = GET_CHAR(tNombre, iNombre[i]);
+	Nombre[tNombre + 1] = '\0';
+	printf("#NAME %s\n", Nombre);
+}
+
+void do_color() {
+	fread(&rcolor, sizeof(color), 2, input);
+	printf("#COLOR $%.2X%.2X%.2X\n", rcolor[0].r, rcolor[0].g, rcolor[0].b);
+	printf("#TCOLOR $%.2X%.2X%.2X\n", rcolor[1].r, rcolor[1].g, rcolor[1].b);
+}
+
+void do_code() {
+	uint16_t i;
+	uint16_t tCode;
+	puts("#BEGIN");
+	fread(&tCode, sizeof(uint16_t), 1, input);
+	Code = calloc(tCode + 1, sizeof(instruction));
+	fread(Code, sizeof(instruction), tCode + 1, input);
+	for(i = 0; i < tCode; i++)
+		string_instruction(Code[i]);
+}
+#endif
