@@ -74,8 +74,9 @@ void do_code() {
 	uint16_t tCode;
 	puts("#BEGIN");
 	fread(&tCode, sizeof(uint16_t), 1, input);
-	Code = calloc(tCode + 1, sizeof(instruction));
-	fread(Code, sizeof(instruction), tCode + 1, input);
+	tCode++;
+	Code = calloc(tCode, sizeof(instruction));
+	fread(Code, sizeof(instruction), tCode, input);
 	for(i = 0; i < tCode; i++)
 		string_instruction(Code[i]);
 }
