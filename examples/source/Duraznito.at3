@@ -1,0 +1,36 @@
+#name Duraznito
+#color $11AAFF
+#equip
+	hull		0	4
+	material	14
+	engine		7
+	turret		1
+	weapon		8	0
+	weapon		8	128
+	scanner		1	0
+#equip
+#begin
+	out	10	100	// Acelera
+	out	51	0	// Set Scanner
+	mov	ex	0	// Seteo el arma en 0
+@main	in	50	dx	// Escaneo
+	in	32	dx	// Leo la torre
+	in	52	bx	// -> Angulo
+	in	48	cx
+	cmp	cx	120
+	jge	@main
+	sub	bx	dx
+	out	31	bx
+	out	41	0	// Set Weapon
+	out	40	4
+	out	40	-4
+	out	40	3
+	out	40	-3
+	out	31	128
+	out	41	1	// Set Weapon
+	out	40	2
+	out	40	-2
+	out	40	5
+	out	40	-5
+	out	11	7
+	jmp	@main

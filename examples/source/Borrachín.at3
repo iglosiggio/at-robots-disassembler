@@ -1,0 +1,18 @@
+#name    Borrachin
+#color    $3FFF5A
+#equip
+    hull    12    1
+    material    19
+    engine    14
+#equip
+#begin
+	out   30   0
+        out   10   100
+@main	out   11   fx
+	call @getrnd
+	jmp   @main
+@getrnd	in	0	fx
+	div	fx	5000
+	cmp	fx	0
+	je @getrnd
+	ret

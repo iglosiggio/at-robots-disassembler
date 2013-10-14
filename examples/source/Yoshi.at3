@@ -1,0 +1,50 @@
+#name Yoshi
+#color $00FEFA
+#equip
+  hull        0   4   
+  material    9     
+  engine      6      
+  turret      3      
+  weapon      8   0  
+  weapon      8   64
+  weapon      8   128
+  weapon      8   192
+  scanner     1   0  
+  scanner     5   64
+  
+#equip
+#begin
+	out   1    42
+        out   30   0          
+        out   10   100     
+	jmp   @main
+@delay	out   11   7
+	dly   15
+@main   out   51   1
+	in    50   ax
+	in    52   ax
+	cmp   ax   42
+	je    @delay
+        out   51   0
+	in	50	ax	
+	in 	32	bx
+	neg	bx 	
+	out	31	bx
+	in	52	bx
+	out	31	bx
+@tiro	out	41	0
+	in	48	bx		
+	cmp	bx	270
+	jge	@main
+	out	40 	0
+	out	41	1
+	out	31	-64
+	out	40	0
+	out	41	2
+	out	31	-64
+	out	40	0
+	out	41	3
+	out	31	-64
+	out	40	0
+	out	11	-10
+	jmp	@main
