@@ -45,7 +45,6 @@ Nota: 	Los valores de los flags siguen la siguiente forma
 		Literal	| [100]	|0010 | 100                        | Lugar de memoria a referenciar
 Un label compila como un número que representa la línea de código
 
-La instrucción LEX es la excepción a la regla y devuelve la dirección de memoria del label (>= 1024).
-	LEX sigue usando los flags de número literal.
+La instrucción LEX es la excepción a la regla y devuelve la dirección de memoria del label (>= 1024) y se nota siempre de forma numéria (tanto una variable como un instrucción.
 
 Los números en general son signed, short y big-endian.

@@ -72,13 +72,13 @@
 		if(flags & FREG << shift && flags & FMEM << shift)
 			printf("[%s]", registers[arg]);
 		else if(flags & FMEM << shift)
-			printf("[%i]", arg);
+			printf("[%hi]", arg);
 		else if(flags & FREG << shift)
 			printf("%s", registers[arg]);
 		else if(flags & FLABEL << shift)
-			printf("@L%X", Labels[arg]);
+			printf("@L%hX", Labels[arg] - 1);
 		else
-			printf("%i", arg);
+			printf("%hi", arg);
 	}
 	void string_instruction(instruction i) {
 		printf("\t%s\t", opcodes[i.opcode]);

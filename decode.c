@@ -80,14 +80,19 @@ void do_code() {
 	Labels = calloc(tCode, sizeof(uint16_t));
 	fread(Code, sizeof(instruction), tCode, input);
 	for(i = 0; i < tCode; i++)
-		if((Code[i].opcode >= JMP && Code[i].opcode <= JGE) || Code[i].opcode == CALL || (Code[i].opcode == LEX && !Code[i].flags)) {
+		if((Code[i].opcode >= JMP && Code[i].opcode <= JGE) || Code[i].opcode == CALL || Code[i].opcode == LEX) {
+			if(Code[i].opcode == LEX) {
+				if(Code[i].arg[0] < 1024)
+					Code[i].flags += FMEM;
+				Code[i].arg[0] -= 1024;
+			}
 			if(!Labels[Code[i].arg[0]])
 				Labels[Code[i].arg[0]] = lastLabel++;
 			Code[i].flags += FLABEL;
 		}
 	for(i = 0; i < tCode; i++) {
-		if(Labels[i] != 0)
-			printf("@L%X", Labels[i]);
+		if(Labels[i])
+			printf("@L%hX", Labels[i] - 1);
 		string_instruction(Code[i]);
 	}
 }
