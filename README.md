@@ -3,25 +3,39 @@ at-robots-dissasembler
 
 Transforma archivos .atc (Compilados del Advanced T-Robots 3) en código fuente compatible.
 
-Implementado:
--------------
-  * Lee el equipamiento del robot
-  * Lee el nombre del robot (**incompleto**)
-  * Lee los colores del robot
-  * Lee el código del robot
+Compilarlo
+==========
+
+Actualmente no está encarado de forma seria, por lo que compilarlo simplemente es `gcc -o decode decode.c`
+
+Uso
+===
+
+El uso es por consola, en el formato `decode [origen] [destino]`, en caso de no ser suplida la salida
+se utilizará la salida estándar, en caso de nos er suplido ninguno de los dos se utilizará
+tanto la entrada como la salida estándar
+
+Implementado (_"Decompila" las siguientes cosas_):
+--------------------------------------------------
+
+  * El equipamiento del robot
+  * El nombre del robot (**incompleto**)
+  * Los colores del robot
+  * El código símil-asm del robot
   * Genera los labels correspondientes
+  * Evita argumentos redundantes (ceros inútiles que *si* aparecen en el binario)
 
 Por implementar:
 ----------------
-  * Comentar automáticamente el equipamiento y instrucciones
-  * Generar las directivas de variable en lugar de las de ubicación de memoria donde corresponda (*Permitiría ya ser 100% compatible con cualquier binario*).
-      Requiere reimplementar parte de la salida de texto del programa.
-  * Reparar bugs varios
-  * Comentar y documentar el código
-  * Mejorar el código para mayor simplicidad
-  * Evitar argumentos redundantes (Ceros inútiles)
-  * Entender mejor el funcionamiento interno de todo ATR3 y documentarlo
-  * Traducir la documentación existente con notas marginales explicando pormentores
+  * [*IMPORTANTE*] Comentar automáticamente el equipamiento y instrucciones
+  * [*IMPORTANTE*] Generar las directivas de variable en lugar de las de ubicación de memoria donde corresponda (*Permitiría ya ser 100% compatible con cualquier binario*)
+      PD: Posiblemente requiera reimplementar parte de la salida de texto del programa
+  * [*IMPORTANTE*] Mejorar soporte de caracteres no-alfanuméricos en el nombre
+  * [ÚTIL] Mejorar la interfaz de consola agregando más opciones (resolver/no resolver variables, comentar, datos estadísticos, etc)
+  * [MENOR] Mejorar el código para mayor simplicidad
+  * [MENOR] Comentar y documentar el código
+  * [MENOR] Entender mejor el funcionamiento interno de todo ATR3 y documentarlo
+  * [MENOR] Traducir la documentación existente con notas marginales explicando pormenores
 
 Largo plazo:
 ------------
