@@ -1,3 +1,6 @@
+#ifndef RUNTIME
+#define RUNTIME
+
 #include <stdio.h>
 #include <errno.h>
 #include <stdlib.h>
@@ -6,10 +9,7 @@
 #include "data/equip.h"
 #include "data/name.h"
 #include "data/code.h"
-#include "data/args.h"
 
-#ifndef RUNTIME
-#define RUNTIME
 int main(int argc, uint8_t **argv) {
 	switch (argc) {
 		case 3:
@@ -45,7 +45,10 @@ void do_equip() {
 	for(i = 0, READEQUIP(&equips[i]); !ENDEQUIP(equips[i]) && i < MAXEQUIPS; i++, READEQUIP(&equips[i]));
 	cequips = i;
 	for(i = 0; i < cequips; i++) {
-		fprintf(output, "\t%s\t%i\t%i\n", get_equip(equips[i].equip), equips[i].arg[0], equips[i].arg[1]);
+		fprintf(output, "\t%s\t%i", get_equip(equips[i].equip), equips[i].arg[0]);
+		if(equip_args[equips[i].equip] == 2)
+			fprintf(output, "\t%i", equips[i].arg[0]);
+		fputc('\n', output);
 	}
 	fputs("#EQUIP\n", output);
 }

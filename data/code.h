@@ -1,8 +1,10 @@
+#ifndef CODE
+#define	CODE
+
 #include <stdint.h>
 #include <stdio.h>
 #include "args.h"
-#ifndef CODE
-#define	CODE
+
 #define	NOP	0
 #define	MOV	1
 #define	XCHG	2
@@ -83,9 +85,9 @@ void string_arg(uint8_t flags, int shift, uint16_t arg) {
 }
 void string_instruction(instruction i) {
 	fprintf(output, "\t%s\t", opcodes[i.opcode]);
-	if(cArgs[i.opcode] > 0) {
+	if(op_args[i.opcode] > 0) {
 		string_arg(i.flags, 0, i.arg[0]);
-		if(cArgs[i.opcode] == 2) {
+		if(op_args[i.opcode] == 2) {
 			fputc('\t', output);
 			string_arg(i.flags, 4, i.arg[1]);
 		}

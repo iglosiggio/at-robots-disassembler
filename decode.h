@@ -1,5 +1,6 @@
 #ifndef RUNTIME_HEADER
 #define RUNTIME_HEADER
+
 #include "data/equip.h"
 
 void do_equip();
