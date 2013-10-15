@@ -6,6 +6,7 @@
 #include "data/equip.h"
 #include "data/name.h"
 #include "data/code.h"
+#include "data/args.h"
 
 #ifndef RUNTIME
 #define RUNTIME
