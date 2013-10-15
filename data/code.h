@@ -70,23 +70,23 @@
 	const char* registers[] = { "AX", "BX", "CX", "DX", "EX", "FX" };
 	void string_arg(uint8_t flags, int shift, uint16_t arg) {
 		if(flags & FREG << shift && flags & FMEM << shift)
-			printf("[%s]", registers[arg]);
+			fprintf(output, "[%s]", registers[arg]);
 		else if(flags & FMEM << shift)
-			printf("[%hi]", arg);
+			fprintf(output, "[%hi]", arg);
 		else if(flags & FREG << shift)
-			printf("%s", registers[arg]);
+			fprintf(output, "%s", registers[arg]);
 		else if(flags & FLABEL << shift)
-			printf("@L%hX", Labels[arg] - 1);
+			fprintf(output, "@L%hX", Labels[arg] - 1);
 		else
-			printf("%hi", arg);
+			fprintf(output, "%hi", arg);
 	}
 	void string_instruction(instruction i) {
-		printf("\t%s\t", opcodes[i.opcode]);
+		fprintf(output, "\t%s\t", opcodes[i.opcode]);
 		string_arg(i.flags, 0, i.arg[0]);
 		if(i.opcode < JMP || i.opcode > JGE && i.opcode != LEX && i.opcode != CALL) {
-			putchar('\t');
+			fputc('\t', output);
 			string_arg(i.flags, 4, i.arg[1]);
 		}
-		putchar('\n');
+		fputc('\n', output);
 	}
 #endif

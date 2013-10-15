@@ -33,20 +33,20 @@ int main(int argc, uint8_t **argv) {
 	do_name();
 	do_color();
 	do_code();
-	//fclose(input);
-	//fclose(output);
+	fclose(input);
+	fclose(output);
 	return 1;
 }
 
 void do_equip() {
 	int i;
-	puts("#EQUIP");
+	fputs("#EQUIP\n", output);
 	for(i = 0, READEQUIP(&equips[i]); !ENDEQUIP(equips[i]) && i < MAXEQUIPS; i++, READEQUIP(&equips[i]));
 	cequips = i;
 	for(i = 0; i < cequips; i++) {
-		printf("\t%s\t%i\t%i\n", get_equip(equips[i].equip), equips[i].arg[0], equips[i].arg[1]);
+		fprintf(output, "\t%s\t%i\t%i\n", get_equip(equips[i].equip), equips[i].arg[0], equips[i].arg[1]);
 	}
-	puts("#EQUIP");
+	fputs("#EQUIP\n", output);
 }
 
 void do_name() {
@@ -60,20 +60,20 @@ void do_name() {
 	for(i = 0; i<tNombre; i++)
 		Nombre[i] = GET_CHAR(tNombre, iNombre[i]);
 	Nombre[tNombre + 1] = '\0';
-	printf("#NAME %s\n", Nombre);
+	fprintf(output, "#NAME %s\n", Nombre);
 }
 
 void do_color() {
 	fread(&rcolor, sizeof(color), 2, input);
-	printf("#COLOR $%.2X%.2X%.2X\n", rcolor[0].r, rcolor[0].g, rcolor[0].b);
-	printf("#TCOLOR $%.2X%.2X%.2X\n", rcolor[1].r, rcolor[1].g, rcolor[1].b);
+	fprintf(output, "#COLOR $%.2X%.2X%.2X\n", rcolor[0].r, rcolor[0].g, rcolor[0].b);
+	fprintf(output, "#TCOLOR $%.2X%.2X%.2X\n", rcolor[1].r, rcolor[1].g, rcolor[1].b);
 }
 
 void do_code() {
 	uint16_t i;
 	uint16_t tCode;
 	uint16_t lastLabel = 1;
-	puts("#BEGIN");
+	fputs("#BEGIN\n", output);
 	fread(&tCode, sizeof(uint16_t), 1, input);
 	tCode++;
 	Code = calloc(tCode, sizeof(instruction));
@@ -84,7 +84,8 @@ void do_code() {
 			if(Code[i].opcode == LEX) {
 				if(Code[i].arg[0] < 1024)
 					Code[i].flags += FMEM;
-				Code[i].arg[0] -= 1024;
+				else
+					Code[i].arg[0] -= 1024;
 			}
 			if(!Labels[Code[i].arg[0]])
 				Labels[Code[i].arg[0]] = lastLabel++;
@@ -92,7 +93,7 @@ void do_code() {
 		}
 	for(i = 0; i < tCode; i++) {
 		if(Labels[i])
-			printf("@L%hX", Labels[i] - 1);
+			fprintf(output, "@L%hX", Labels[i] - 1);
 		string_instruction(Code[i]);
 	}
 }
