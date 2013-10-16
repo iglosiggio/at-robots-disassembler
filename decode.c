@@ -47,7 +47,7 @@ void do_equip() {
 	for(i = 0; i < cequips; i++) {
 		fprintf(output, "\t%s\t%i", get_equip(equips[i].equip), equips[i].arg[0]);
 		if(equip_args[equips[i].equip] == 2)
-			fprintf(output, "\t%i", equips[i].arg[0]);
+			fprintf(output, "\t%i", equips[i].arg[1]);
 		fputc('\n', output);
 	}
 	fputs("#EQUIP\n", output);
