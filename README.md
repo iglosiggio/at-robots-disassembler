@@ -1,7 +1,7 @@
 at-robots-dissasembler
 ======================
 
-Transforma archivos .atc (Compilados del Advanced T-Robots 3) en código fuente compatible.
+Transforma ["archivos .atc"](https://github.com/iglosiggio/at-robots-disassembler/wiki/Estructura-del-.atc) (Compilados del Advanced T-Robots 3) en código fuente compatible.
 
 Compilarlo
 ==========
@@ -19,7 +19,7 @@ Implementado (_"Decompila" las siguientes cosas_):
 --------------------------------------------------
 
   * El equipamiento del robot
-  * El nombre del robot (**incompleto**)
+  * El nombre del robot (**incompleto, faltan caracteres**)
   * Los colores del robot
   * El código símil-asm del robot
   * Genera los labels correspondientes
@@ -27,11 +27,11 @@ Implementado (_"Decompila" las siguientes cosas_):
 
 Por implementar:
 ----------------
-  * [*IMPORTANTE*] Comentar automáticamente el equipamiento y instrucciones
-  * [*IMPORTANTE*] Generar las directivas de variable en lugar de las de ubicación de memoria donde corresponda (*Permitiría ya ser 100% compatible con cualquier binario*)
-      PD: Posiblemente requiera reimplementar parte de la salida de texto del programa
-  * [*IMPORTANTE*] Mejorar soporte de caracteres no-alfanuméricos en el nombre
-  * [ÚTIL] Mejorar la interfaz de consola agregando más opciones (resolver/no resolver variables, comentar, datos estadísticos, etc)
+  * [**IMPORTANTE**] Comentar automáticamente el equipamiento y instrucciones
+  * [**IMPORTANTE**] Generar las directivas de variable en lugar de las de ubicación de memoria donde corresponda (*Permitiría ya ser 100% compatible con cualquier binario*)
+      PD: _Posiblemente requiera reimplementar parte de la salida de texto del programa_
+  * [**IMPORTANTE**] Mejorar soporte de caracteres no-alfanuméricos en el nombre
+  * [_ÚTIL_] Mejorar la interfaz de consola agregando más opciones (resolver/no resolver variables, comentar, datos estadísticos, etc)
   * [MENOR] Mejorar el código para mayor simplicidad
   * [MENOR] Comentar y documentar el código
   * [MENOR] Entender mejor el funcionamiento interno de todo ATR3 y documentarlo
