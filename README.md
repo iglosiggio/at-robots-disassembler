@@ -1,7 +1,7 @@
 at-robots-dissasembler
 ======================
 
-Transforma ["archivos .atc"](https://github.com/iglosiggio/at-robots-disassembler/wiki/Estructura-del-.atc) (Compilados del Advanced T-Robots 3) en código fuente compatible.
+Transforma [archivos .atc](https://github.com/iglosiggio/at-robots-disassembler/wiki/Estructura-del-.atc) (Compilados del Advanced T-Robots 3) en código fuente compatible.
 
 Compilarlo
 ==========
